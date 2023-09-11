@@ -1,0 +1,45 @@
+services:
+  backend: 
+    build:
+      context: ./services/backend
+      target: development
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres_dev
+    ports:
+    - 5000:5000
+    volumes:
+    - ./services/backend:/app
+    restart: "no"
+    depends_on:
+    - db
+
+  frontend:
+    build:
+      context: ./services/frontend
+      target: development
+    ports:
+    - 8080:8080
+    volumes:
+    - ./services/frontend:/app
+    - /app/node_modules
+
+  db:
+    image: postgres:16.0
+    volumes: 
+    - app-data:/var/lib/postgresql/data/
+    secrets:
+    - db-password
+    ports:
+    - 5432:5432
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+    - POSTGRES_DB=postgres_dev
+    restart: "always"
+
+volumes:
+  app-data:
+
+secrets:
+  db-password:
+    file: db/password.txt

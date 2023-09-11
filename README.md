@@ -1,2 +1,2 @@
-# project-management
-Project management app created using FastAPI, VueJS, and PostgreSQL
+# payment-splitter
+Payment splitter app created using FastAPI, VueJS, and PostgreSQL

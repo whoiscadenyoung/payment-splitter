@@ -1,45 +1,57 @@
+# docker-compose up -d --build
 services:
   backend: 
-    build:
-      context: ./services/backend
-      target: development
+    build: ./services/backend
+    platform: linux/amd64
+    container_name: backend
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres_dev
+    # exposes port externally
     ports:
-    - 5000:5000
+    - 8000:8000
     volumes:
+    # - app-data:/app
     - ./services/backend:/app
+    # --reload enables live reload for editing the source code
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
     restart: "no"
     depends_on:
     - db
 
-  frontend:
-    build:
-      context: ./services/frontend
-      target: development
-    ports:
-    - 8080:8080
-    volumes:
-    - ./services/frontend:/app
-    - /app/node_modules
+  # frontend:
+  #   build:
+  #     context: ./services/frontend
+  #     target: development
+  #   ports:
+  #   - 8080:8080
+  #   volumes:
+  #   - ./services/frontend:/app
+  #   - /app/node_modules
 
   db:
-    image: postgres:16.0
+    image: postgres:15
+    container_name: db
     volumes: 
     - app-data:/var/lib/postgresql/data/
     secrets:
     - db-password
-    ports:
-    - 5432:5432
+    # Exposes port for other services to access (not external)
+    expose:
+    - 5432
     environment:
     - POSTGRES_USER=postgres
     - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
     - POSTGRES_DB=postgres_dev
-    restart: "always"
+    # make sure database is accepting connections before trying to connect
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   app-data:
 
 secrets:
   db-password:
-    file: db/password.txt
+    file: services/db/password.txt

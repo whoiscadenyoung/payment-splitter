@@ -9,19 +9,19 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
 
 # Set the current working directory
-WORKDIR /code
+WORKDIR /app
 
 # Copy the requirements file to the app
-COPY ./requirements.txt /code/requirements.txt
+COPY ./requirements.txt .
 
 # Install depdendencies
 # --no-cache-dir means not to save downloaded packages locally
 # --upgrade upgrades existing packages
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r ./requirements.txt
 
 # Copy the directory; has all the code in it and changes most frequently
 # put at the end to optimize container image build times
-COPY ./app /code/app
+COPY . .
 
 # run the uvicorn server in the working directory
 # CMD ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]

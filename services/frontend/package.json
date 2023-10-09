@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.2",
+    "next": "latest",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "sass": "^1.69.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

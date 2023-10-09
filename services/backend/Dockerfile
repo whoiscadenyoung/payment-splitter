@@ -8,6 +8,10 @@
 # Can also use: https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
 
+# Set environment varibles
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 # Set the current working directory
 WORKDIR /app
 

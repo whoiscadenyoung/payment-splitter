@@ -1,0 +1,87 @@
+// Custom.scss
+// Option B: Include parts of Bootstrap
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "/node_modules/bootstrap/scss/functions.scss";
+
+// 2. Include any default variable overrides here
+
+// 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
+@import "/node_modules/bootstrap/scss/variables.scss";
+@import "/node_modules/bootstrap/scss/variables-dark.scss";
+
+// 4. Include any default map overrides here
+
+// 5. Include remainder of required parts
+@import "/node_modules/bootstrap/scss/maps.scss";
+@import "/node_modules/bootstrap/scss/mixins.scss";
+@import "/node_modules/bootstrap/scss/utilities.scss";
+@import "/node_modules/bootstrap/scss/root.scss";
+@import "/node_modules/bootstrap/scss/reboot.scss";
+
+// 6. Optionally include any other parts as needed
+@import "/node_modules/bootstrap/scss/type.scss";
+@import "/node_modules/bootstrap/scss/images.scss";
+@import "/node_modules/bootstrap/scss/containers.scss";
+@import "/node_modules/bootstrap/scss/grid.scss";
+@import "/node_modules/bootstrap/scss/tables.scss";
+@import "/node_modules/bootstrap/scss/forms.scss";
+@import "/node_modules/bootstrap/scss/buttons.scss";
+@import "/node_modules/bootstrap/scss/transitions.scss";
+@import "/node_modules/bootstrap/scss/dropdown.scss";
+@import "/node_modules/bootstrap/scss/button-group.scss";
+@import "/node_modules/bootstrap/scss/nav.scss";
+@import "/node_modules/bootstrap/scss/navbar.scss";
+@import "/node_modules/bootstrap/scss/card.scss";
+@import "/node_modules/bootstrap/scss/accordion.scss";
+@import "/node_modules/bootstrap/scss/breadcrumb.scss";
+@import "/node_modules/bootstrap/scss/pagination.scss";
+@import "/node_modules/bootstrap/scss/badge.scss";
+@import "/node_modules/bootstrap/scss/alert.scss";
+@import "/node_modules/bootstrap/scss/progress.scss";
+@import "/node_modules/bootstrap/scss/list-group.scss";
+@import "/node_modules/bootstrap/scss/close.scss";
+@import "/node_modules/bootstrap/scss/toasts.scss";
+@import "/node_modules/bootstrap/scss/modal.scss";
+@import "/node_modules/bootstrap/scss/tooltip.scss";
+@import "/node_modules/bootstrap/scss/popover.scss";
+@import "/node_modules/bootstrap/scss/carousel.scss";
+@import "/node_modules/bootstrap/scss/spinners.scss";
+@import "/node_modules/bootstrap/scss/offcanvas.scss";
+@import "/node_modules/bootstrap/scss/placeholders.scss";
+
+// Helpers
+@import "/node_modules/bootstrap/scss/helpers.scss";
+
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "/node_modules/bootstrap/scss/utilities/api.scss";
+
+// 8. Add additional custom code here
+.dropdown-menu {
+    min-width:15rem;
+}
+
+.member-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.member-item {
+
+}
+.member-link {
+    text-decoration: none;
+}
+.group-icon {
+    color: white;
+}
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    font-size: 2rem;
+    color: #fff;
+    border-radius: .75rem;
+}

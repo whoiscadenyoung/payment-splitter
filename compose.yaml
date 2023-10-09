@@ -3,9 +3,9 @@ services:
   backend: 
     build: ./services/backend
     platform: linux/amd64
-    container_name: backend
+    container_name: payment-backend
     environment:
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres_dev
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     # exposes port externally
     ports:
     - 8000:8000
@@ -18,30 +18,28 @@ services:
     depends_on:
     - db
 
-  # frontend:
-  #   build:
-  #     context: ./services/frontend
-  #     target: development
-  #   ports:
-  #   - 8080:8080
-  #   volumes:
-  #   - ./services/frontend:/app
-  #   - /app/node_modules
+  frontend:
+    build: ./services/frontend
+    container_name: payment-frontend
+    ports:
+    - 3000:3000
+    command: npm run dev
+    volumes:
+    - ./services/frontend:/app
+    - /app/node_modules
 
   db:
     image: postgres:15
-    container_name: db
+    container_name: payment-db
     volumes: 
     - app-data:/var/lib/postgresql/data/
-    secrets:
-    - db-password
     # Exposes port for other services to access (not external)
     expose:
     - 5432
     environment:
-    - POSTGRES_USER=postgres
-    - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
-    - POSTGRES_DB=postgres_dev
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    - POSTGRES_DB
     # make sure database is accepting connections before trying to connect
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -49,9 +47,17 @@ services:
       timeout: 5s
       retries: 5
 
+  pgadmin:
+    container_name: payment-pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL
+      - PGADMIN_DEFAULT_PASSWORD
+    ports:
+      - "5050:80"
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+
+
 volumes:
   app-data:
-
-secrets:
-  db-password:
-    file: services/db/password.txt
